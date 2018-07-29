@@ -1,0 +1,13 @@
+@import "global-color-palette";
+
+body {
+  background-color: $space-bg;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+.fill-space {
+  flex: 1 1 auto;
+}
