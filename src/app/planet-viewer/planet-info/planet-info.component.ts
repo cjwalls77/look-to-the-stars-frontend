@@ -7,13 +7,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlanetInfoComponent implements OnInit {
 
-  constructor() { }
+  private _planetName: string;
+  private _planetDescription: string;
 
-  ngOnInit() {
+  get planetName(): string {
+    return this._planetName;
   }
 
-  onResize(event) {
+  get planetDescription(): string {
+    return this._planetDescription;
+  }
 
+  constructor() {
+    this._planetName = 'Earth';
+    this._planetDescription = 'This is where we come from...';
+  }
+
+  ngOnInit() {
   }
 
 }

@@ -2,6 +2,10 @@ import * as THREE from 'three';
 
 export class Planet {
 
+  private _name: string;
+  private _description: string;
+  private _image: string;
+
   private _radius: number;
   private _color: number;
   private _orbitRadius: number;
