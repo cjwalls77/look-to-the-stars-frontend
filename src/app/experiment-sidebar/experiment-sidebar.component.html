@@ -1,1 +1,8 @@
-
+<mat-card>
+  <mat-card-content>
+    <label for="orbit-slider">Orbit Speed</label>
+    <mat-slider id="orbit-slider" [min]=".001" [step]=".001" [max]=".1" [value]=".05" (change)="changeOrbitSpeed($event)"></mat-slider>
+    <label for="rotation-slider">Axis Rotation Speed</label>
+    <mat-slider id="rotation-slider" [min]=".001" [step]=".001" [max]=".1" [value]=".05" (change)="changeRotationSpeed($event)"></mat-slider>
+  </mat-card-content>
+</mat-card>

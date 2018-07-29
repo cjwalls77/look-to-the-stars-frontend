@@ -13,7 +13,9 @@ export class OrbitSimulationComponent implements OnInit {
 
 
   private readonly height = 500;
-  private width = 500;
+  private readonly width = 500;
+
+  private isOrbiting = true;
 
   private _simControlService: SimulationControlService;
 
@@ -26,21 +28,45 @@ export class OrbitSimulationComponent implements OnInit {
 
   private sun: THREE.Mesh;
   private planetData: Planet;
+  private planetGeo: THREE.Mesh;
   private planetObject: THREE.Object3D;
   private orbitRing: THREE.Line;
+
+  private static generatePlanetGeo(data: Planet) {
+    const SEGMENTS = 20;
+    const RINGS = 20;
+
+    return new THREE.Mesh(
+      new THREE.SphereGeometry(
+        data.radius,
+        SEGMENTS,
+        RINGS),
+      new THREE.MeshLambertMaterial(
+        {
+          color: data.color
+        }
+      )
+    );
+  }
+
+  private static generateOrbitRing(data: Planet): THREE.Line {
+    const orbitRing = new THREE.Line(
+      new THREE.CircleGeometry(data.orbitRadius, 90),
+      new THREE.LineBasicMaterial()
+    );
+    // orbit.geometry.vertices.shift();
+    orbitRing.rotation.x = THREE.Math.degToRad(90);
+    orbitRing.rotation.z = THREE.Math.degToRad(270);
+    return orbitRing;
+  }
 
   constructor(private simControlService: SimulationControlService) {
     this._simControlService = simControlService;
     this.getPlanetData();
-    this._simControlService.simulationCanvasSizeChanged.subscribe((canvasSize: SimulationCanvasSize) => {
-      if (this.renderer != null && this.camera != null) {
-        this.renderer.setSize(canvasSize.width, canvasSize.height);
-        this.camera.aspect = canvasSize.width / canvasSize.height;
-        this.camera.updateProjectionMatrix();
-      }
-    });
+    this.subscribeToSimulationControlChanges();
   }
 
+  // FIXME: Get data from backend service
   private getPlanetData() {
     this.planetData = new Planet();
     this.planetData.radius = 20;
@@ -52,19 +78,48 @@ export class OrbitSimulationComponent implements OnInit {
     this.planetData.rotation = 1;
   }
 
+  private subscribeToSimulationControlChanges() {
+    // Responsive canvas size change
+    this._simControlService.simulationCanvasSizeChanged.subscribe((canvasSize: SimulationCanvasSize) => {
+      if (this.renderer != null && this.camera != null) {
+        this.renderer.setSize(canvasSize.width, canvasSize.height);
+        this.camera.aspect = canvasSize.width / canvasSize.height;
+        this.camera.updateProjectionMatrix();
+      }
+    });
+
+    // Planet Change Event
+    this._simControlService.planetDataChange.subscribe((data: Planet) => {
+      this.updatePlanet(data);
+    });
+
+    // Orbit Speed Change Event
+    this._simControlService.planetOrbitSpeedChange.subscribe((speed: number) => {
+      this.planetData.orbitSpeed = speed;
+    });
+
+    // Planet Axis Rotation Speed Change Event
+    this._simControlService.planetRotationSpeedChange.subscribe((speed: number) => {
+      this.planetData.rotationSpeed = speed;
+    });
+  }
+
   ngOnInit() {
     this.container = this.elementRef.nativeElement;
     this.init();
   }
 
-  init(): void {
+  private init(): void {
     const bgColor = 0x2f0049;
+
     // Set-up Scene
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(bgColor);
+
     // Set-up Renderer
     this.renderer = new THREE.WebGLRenderer({antialias: true});
     this.renderer.setPixelRatio(window.devicePixelRatio);
+
     // Set-up Camera
     const view: any = {
       angle: 45,
@@ -89,7 +144,7 @@ export class OrbitSimulationComponent implements OnInit {
     this.render();
   }
 
-  createSun(): void {
+  private createSun(): void {
     // Set up the sun vars
     const RADIUS = 50;
     const SEGMENTS = 20;
@@ -111,43 +166,42 @@ export class OrbitSimulationComponent implements OnInit {
     this.scene.add(this.sun);
   }
 
-  createPlanet(): void {
+  private createPlanet(): void {
 
     // Mesh detail settings
     const SEGMENTS = 20;
     const RINGS = 20;
     const ORBIT_LINE_SEGMENTS = 90;
 
-     const planetGeometry = new THREE.Mesh(
-      new THREE.SphereGeometry(
-        this.planetData.radius,
-        SEGMENTS,
-        RINGS),
-      new THREE.MeshLambertMaterial(
-        {
-          color: this.planetData.color
-        }
-      )
-    );
+     this.planetGeo = OrbitSimulationComponent.generatePlanetGeo(this.planetData);
 
     this.planetObject = new THREE.Object3D();
-    this.planetObject.add(planetGeometry);
+    this.planetObject.add(this.planetGeo);
 
     this.planetObject.position.set(this.planetData.orbit, 0, 0);
 
     this.scene.add(this.planetObject);
 
-    this.orbitRing = new THREE.Line(
-      new THREE.CircleGeometry(this.planetData.orbitRadius, 90),
-      new THREE.LineBasicMaterial()
-    );
-    // orbit.geometry.vertices.shift();
-    this.orbitRing.rotation.x = THREE.Math.degToRad(90);
-    this.orbitRing.rotation.z = THREE.Math.degToRad(270);
+    this.orbitRing = OrbitSimulationComponent.generateOrbitRing(this.planetData);
     this.scene.add(this.orbitRing);
   }
 
-  createLighting(): void {
+  private updatePlanet(newPlanetData: Planet) {
+    // Update planet 3D object rendering
+    this.planetObject.remove(this.planetGeo);
+    this.planetGeo = OrbitSimulationComponent.generatePlanetGeo(newPlanetData);
+    this.planetObject.add(this.planetGeo);
+
+    // Update planet orbit ring rendering
+    this.scene.remove(this.orbitRing);
+    this.orbitRing = OrbitSimulationComponent.generateOrbitRing(newPlanetData);
+    this.scene.add(this.orbitRing);
+
+    // Update planet data for animation
+    this.planetData = newPlanetData;
+  }
+
+  private createLighting(): void {
     // create a point light
     const pointLight =
       new THREE.PointLight(0xFFFFFF, 1, 0, 0);
@@ -159,7 +213,7 @@ export class OrbitSimulationComponent implements OnInit {
     this.scene.add(ambientlight);
   }
 
-  render(): void {
+  private render(): void {
     const self: OrbitSimulationComponent = this;
 
     (function render() {
@@ -170,12 +224,18 @@ export class OrbitSimulationComponent implements OnInit {
     }());
 
   }
-  animate(): void {
 
-    this.planetData.updateRotation();
-    this.planetObject.rotation.set(0, this.planetData.rotation, 0);
-    this.planetData.updateOrbit();
-    this.planetObject.position.set(Math.cos(this.planetData.orbit) * this.planetData.orbitRadius, 0, Math.sin(this.planetData.orbit) * this.planetData.orbitRadius);
+  private animate(): void {
+    if (this.isOrbiting) {
+      this.planetData.updateRotation();
+      this.planetObject.rotation.set(0, this.planetData.rotation, 0);
+      this.planetData.updateOrbit();
+      this.planetObject.position.set(
+        Math.cos(this.planetData.orbit) * this.planetData.orbitRadius,
+        0,
+        Math.sin(this.planetData.orbit) * this.planetData.orbitRadius
+      );
+    }
   }
 
 

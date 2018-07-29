@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {SimulationControlService} from '../shared/services/simulation-control.service';
+import {MatSliderChange} from '@angular/material';
 
 @Component({
   selector: 'app-experiment-sidebar',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExperimentSidebarComponent implements OnInit {
 
-  constructor() { }
+  private _simControlService: SimulationControlService;
+
+  constructor(private simControlService: SimulationControlService) {
+    this._simControlService = simControlService;
+  }
 
   ngOnInit() {
+  }
+
+  changeOrbitSpeed(change: MatSliderChange) {
+    this._simControlService.changePlanetOrbitSpeed(change.value);
+  }
+
+  changeRotationSpeed(change: MatSliderChange) {
+    this._simControlService.changePlanetRotationSpeed(change.value);
   }
 
 }
