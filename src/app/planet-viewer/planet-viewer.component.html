@@ -1,8 +1,9 @@
 <div fxLayout>
-  <div fxFlex>
+  <div fxFlex="10%"></div>
+  <div #simcontainer fxFlex="70%" (window:resize)="onResize($event)">
     <app-orbit-view></app-orbit-view>
   </div>
-  <div fxFlex>
+  <div fxFlex="20%">
     <app-planet-info></app-planet-info>
   </div>
 </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {SimulationControlService} from '../shared/services/simulation-control.service';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  private _simControlService: SimulationControlService;
+
+  constructor(private simControlService: SimulationControlService) {
+    this._simControlService = simControlService;
+  }
 
   ngOnInit() {
+  }
+
+  public changePlanet() {
+    this._simControlService.changePlanet();
   }
 
 }

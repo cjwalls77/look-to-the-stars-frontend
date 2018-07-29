@@ -6,16 +6,17 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { PlanetViewerComponent } from './planet-viewer/planet-viewer.component';
-import { OrbitViewComponent } from './planet-viewer/orbit-view/orbit-view.component';
+import { OrbitSimulationComponent } from './planet-viewer/orbit-view/orbit-simulation.component';
 import { PlanetInfoComponent } from './planet-viewer/planet-info/planet-info.component';
 import { ExperimentSidebarComponent } from './experiment-sidebar/experiment-sidebar.component';
+import {SimulationControlService} from './shared/services/simulation-control.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     PlanetViewerComponent,
-    OrbitViewComponent,
+    OrbitSimulationComponent,
     PlanetInfoComponent,
     ExperimentSidebarComponent
   ],
@@ -27,7 +28,9 @@ import { ExperimentSidebarComponent } from './experiment-sidebar/experiment-side
     MatCardModule,
     FlexLayoutModule
   ],
-  providers: [],
+  providers: [
+    SimulationControlService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

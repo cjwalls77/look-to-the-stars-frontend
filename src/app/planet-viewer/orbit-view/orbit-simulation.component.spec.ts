@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OrbitViewComponent } from './orbit-view.component';
+import { OrbitSimulationComponent } from './orbit-simulation.component';
 
-describe('OrbitViewComponent', () => {
-  let component: OrbitViewComponent;
-  let fixture: ComponentFixture<OrbitViewComponent>;
+describe('OrbitSimulationComponent', () => {
+  let component: OrbitSimulationComponent;
+  let fixture: ComponentFixture<OrbitSimulationComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrbitViewComponent ]
+      declarations: [ OrbitSimulationComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OrbitViewComponent);
+    fixture = TestBed.createComponent(OrbitSimulationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

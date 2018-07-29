@@ -12,4 +12,8 @@ export class PlanetInfoComponent implements OnInit {
   ngOnInit() {
   }
 
+  onResize(event) {
+
+  }
+
 }
