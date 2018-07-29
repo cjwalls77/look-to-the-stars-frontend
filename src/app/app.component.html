@@ -3,10 +3,16 @@
     <app-header></app-header>
   </header>
   <article>
-    <app-planet-viewer></app-planet-viewer>
-    <aside>
-      <app-experiment-sidebar></app-experiment-sidebar>
-    </aside>
+    <mat-drawer-container>
+      <mat-drawer mode="over" [opened]="showSidebar" (openedChange)="updateSidebarOpenState($event)" class="drawer-sidebar">
+        <aside>
+          <app-experiment-sidebar></app-experiment-sidebar>
+        </aside>
+      </mat-drawer>
+      <mat-drawer-content class="drawer-content">
+        <app-planet-viewer (settingsToggleChange)="toggleSidebar($event)"></app-planet-viewer>
+      </mat-drawer-content>
+    </mat-drawer-container>
   </article>
 </section>
 

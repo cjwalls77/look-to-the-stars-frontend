@@ -1,5 +1,7 @@
 <div fxLayout>
-  <div fxFlex="10%"></div>
+  <div fxFlex="10%">
+    <button id="settings-tab-button" mat-stroked-button (click)="toggleSettings($event)">settings</button>
+  </div>
   <div #simcontainer fxFlex="70%" (window:resize)="onResize($event)">
     <app-orbit-view></app-orbit-view>
   </div>

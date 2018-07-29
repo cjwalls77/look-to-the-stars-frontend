@@ -1,4 +1,4 @@
-import {AfterViewChecked, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewChecked, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {SimulationControlService} from '../shared/services/simulation-control.service';
 
 @Component({
@@ -7,6 +7,8 @@ import {SimulationControlService} from '../shared/services/simulation-control.se
   styleUrls: ['./planet-viewer.component.scss']
 })
 export class PlanetViewerComponent implements OnInit, AfterViewChecked {
+
+  @Output() settingsToggleChange = new EventEmitter();
 
   @ViewChild('simcontainer') simContainerElementRef: ElementRef;
 
@@ -29,6 +31,10 @@ export class PlanetViewerComponent implements OnInit, AfterViewChecked {
 
   getSimContainerWidth(): number {
     return this.simContainerElementRef.nativeElement.offsetWidth;
+  }
+
+  toggleSettings(): void {
+    this.settingsToggleChange.emit();
   }
 
 }

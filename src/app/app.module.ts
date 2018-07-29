@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { MatToolbarModule, MatSliderModule, MatButtonModule, MatCardModule, MatSlideToggleModule } from '@angular/material';
+import { MatToolbarModule, MatSliderModule, MatButtonModule, MatCardModule,
+  MatSlideToggleModule, MatSidenavModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule} from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
 
@@ -27,7 +29,9 @@ import {SimulationControlService} from './shared/services/simulation-control.ser
     MatButtonModule,
     MatCardModule,
     MatSlideToggleModule,
-    FlexLayoutModule
+    MatSidenavModule,
+    FlexLayoutModule,
+    BrowserAnimationsModule
   ],
   providers: [
     SimulationControlService

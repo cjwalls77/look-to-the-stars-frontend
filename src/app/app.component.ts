@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'look-to-the-stars-frontend';
+
+  showSidebar = false;
+
+  toggleSidebar() {
+    this.showSidebar = !this.showSidebar;
+  }
+
+  updateSidebarOpenState(opened: boolean) {
+    this.showSidebar = opened;
+  }
 }
