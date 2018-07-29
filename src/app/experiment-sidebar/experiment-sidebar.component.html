@@ -4,5 +4,6 @@
     <mat-slider id="orbit-slider" [min]=".001" [step]=".001" [max]=".1" [value]=".05" (change)="changeOrbitSpeed($event)"></mat-slider>
     <label for="rotation-slider">Axis Rotation Speed</label>
     <mat-slider id="rotation-slider" [min]=".001" [step]=".001" [max]=".1" [value]=".05" (change)="changeRotationSpeed($event)"></mat-slider>
+    <mat-slide-toggle [checked]="true" (change)="changeIsOrbiting($event)">Orbiting</mat-slide-toggle>
   </mat-card-content>
 </mat-card>

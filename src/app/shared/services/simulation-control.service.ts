@@ -11,6 +11,7 @@ export class SimulationControlService {
   private _planetOrbitSpeedChange = new EventEmitter<number>();
   private _planetRotationSpeedChange = new EventEmitter<number>();
   private _planetDataChange = new EventEmitter<Planet>();
+  private _isOrbiting = new EventEmitter<boolean>();
   private _simulationCanvasSizeChanged = new EventEmitter<SimulationCanvasSize>();
 
   get planetOrbitSpeedChange(): EventEmitter<number> {
@@ -23,6 +24,10 @@ export class SimulationControlService {
 
   get planetDataChange(): EventEmitter<Planet> {
     return this._planetDataChange;
+  }
+
+  get isOrbiting(): EventEmitter<boolean> {
+    return this._isOrbiting;
   }
 
   get simulationCanvasSizeChanged(): EventEmitter<SimulationCanvasSize> {
@@ -47,6 +52,14 @@ export class SimulationControlService {
   public updateSimulationCanvasSize(width: number, height: number): void {
     const canvasSize = new SimulationCanvasSize(width, height);
     this.simulationCanvasSizeChanged.emit(canvasSize);
+  }
+
+  public startOrbiting() {
+    this._isOrbiting.emit(true);
+  }
+
+  public stopOrbiting() {
+    this._isOrbiting.emit(false);
   }
 
   public changePlanetOrbitSpeed(days: number) {

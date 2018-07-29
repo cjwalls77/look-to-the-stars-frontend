@@ -102,6 +102,11 @@ export class OrbitSimulationComponent implements OnInit {
     this._simControlService.planetRotationSpeedChange.subscribe((speed: number) => {
       this.planetData.rotationSpeed = speed;
     });
+
+    // Start/Stop Orbiting Animation Change Event
+    this._simControlService.isOrbiting.subscribe((isOrbiting: boolean) => {
+      this.isOrbiting = isOrbiting;
+    });
   }
 
   ngOnInit() {
