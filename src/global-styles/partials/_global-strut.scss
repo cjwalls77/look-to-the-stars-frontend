@@ -11,3 +11,11 @@ h1 {
 .fill-space {
   flex: 1 1 auto;
 }
+
+%button-style-mods {
+  color: white;
+}
+
+%header-top-spacing {
+  margin-top: 20px;
+}

@@ -1,4 +1,7 @@
-#settings-tab-button {
-  color: white;
-  margin-top: 20px;
+@import "../../global-styles/partials/global-strut";
+
+button {
+  @extend %header-top-spacing;
+  color: blueviolet;
+  background-color: white;
 }

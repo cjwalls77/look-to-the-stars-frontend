@@ -1,3 +1,5 @@
+@import "../../../global-styles/partials/global-strut";
+
 .planet-info-container {
-  margin-top: 20px;
+  @extend %header-top-spacing;
 }

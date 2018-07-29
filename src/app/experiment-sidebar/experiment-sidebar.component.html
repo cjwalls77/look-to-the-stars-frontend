@@ -1,11 +1,20 @@
-<mat-card>
-  <mat-card-content>
-    <form>
-      <label for="orbit-slider">Orbit Speed</label>
-      <mat-slider id="orbit-slider" [min]=".001" [step]=".001" [max]=".1" [value]=".05" (change)="changeOrbitSpeed($event)"></mat-slider>
-      <label for="rotation-slider">Axis Rotation Speed</label>
-      <mat-slider id="rotation-slider" [min]=".001" [step]=".001" [max]=".1" [value]=".05" (change)="changeRotationSpeed($event)"></mat-slider>
+<form>
+  <mat-list>
+    <mat-list-item>
+      <h1>Experiment</h1>
+    </mat-list-item>
+    <mat-list-item>
       <mat-slide-toggle [checked]="true" (change)="changeIsOrbiting($event)">Orbiting</mat-slide-toggle>
-    </form>
-  </mat-card-content>
-</mat-card>
+    </mat-list-item>
+    <mat-list-item>
+      <label for="orbit-slider">Orbit Speed</label>
+      <mat-slider id="orbit-slider" [min]=".001" [step]=".001" [max]=".1" [value]=".05"
+                  (change)="changeOrbitSpeed($event)"></mat-slider>
+    </mat-list-item>
+    <mat-list-item>
+      <label for="rotation-slider">Rotation Speed</label>
+      <mat-slider id="rotation-slider" [min]=".001" [step]=".001" [max]=".1" [value]=".05"
+                  (change)="changeRotationSpeed($event)"></mat-slider>
+    </mat-list-item>
+  </mat-list>
+</form>

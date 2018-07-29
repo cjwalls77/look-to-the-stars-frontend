@@ -1,11 +1,11 @@
 <div fxLayout>
   <div fxFlex="10%">
-    <button id="settings-tab-button" mat-stroked-button (click)="toggleSettings($event)">settings</button>
+    <button id="settings-tab-button" mat-stroked-button class="mat-elevation-z15" (click)="toggleSettings($event)"><mat-icon>build</mat-icon></button>
   </div>
   <div #simcontainer fxFlex="70%" (window:resize)="onResize($event)">
     <app-orbit-view></app-orbit-view>
   </div>
-  <div fxFlex="20%">
+  <div fxFlex="30%">
     <app-planet-info></app-planet-info>
   </div>
 </div>
