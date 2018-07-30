@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { Planet } from '../../shared/models/planet';
 import {SimulationControlService} from '../../shared/services/simulation-control.service';
 import {SimulationCanvasSize} from '../../shared/models/simulation-canvas-size';
+import {PlanetDao} from '../../shared/models/api/planet-dao';
 
 @Component({
   selector: 'app-orbit-view',
@@ -27,12 +28,12 @@ export class OrbitSimulationComponent implements OnInit {
   private renderer: THREE.WebGLRenderer;
 
   private sun: THREE.Mesh;
-  private planetData: Planet;
+  private planetData: Planet = new Planet();
   private planetGeo: THREE.Mesh;
   private planetObject: THREE.Object3D;
   private orbitRing: THREE.Line;
 
-  private static generatePlanetGeo(data: Planet) {
+  private static generatePlanetGeo(data: PlanetDao) {
     const SEGMENTS = 20;
     const RINGS = 20;
 
@@ -43,13 +44,13 @@ export class OrbitSimulationComponent implements OnInit {
         RINGS),
       new THREE.MeshLambertMaterial(
         {
-          color: data.color
+          color: new THREE.Color(data.color)
         }
       )
     );
   }
 
-  private static generateOrbitRing(data: Planet): THREE.Line {
+  private static generateOrbitRing(data: PlanetDao): THREE.Line {
     const orbitRing = new THREE.Line(
       new THREE.CircleGeometry(data.orbitRadius, 90),
       new THREE.LineBasicMaterial()
@@ -62,20 +63,7 @@ export class OrbitSimulationComponent implements OnInit {
 
   constructor(private simControlService: SimulationControlService) {
     this._simControlService = simControlService;
-    this.getPlanetData();
     this.subscribeToSimulationControlChanges();
-  }
-
-  // FIXME: Get data from backend service
-  private getPlanetData() {
-    this.planetData = new Planet();
-    this.planetData.radius = 20;
-    this.planetData.color = 0x92b1ff;
-    this.planetData.orbitRadius = 200;
-    this.planetData.orbitSpeed = .005;
-    this.planetData.orbit = 1;
-    this.planetData.rotationSpeed = 0.005;
-    this.planetData.rotation = 1;
   }
 
   private subscribeToSimulationControlChanges() {
@@ -133,7 +121,7 @@ export class OrbitSimulationComponent implements OnInit {
       far: 10000
     };
     this.camera = new THREE.PerspectiveCamera(view.angle, view.aspect, view.near, view.far);
-    this.camera.position.set(0, 100, 400);
+    this.camera.position.set(0, 100, 500);
     this.camera.lookAt(0, 0, 0);
     this.scene.add(this.camera);
 
@@ -191,7 +179,7 @@ export class OrbitSimulationComponent implements OnInit {
     this.scene.add(this.orbitRing);
   }
 
-  private updatePlanet(newPlanetData: Planet) {
+  private updatePlanet(newPlanetData: PlanetDao) {
     // Update planet 3D object rendering
     this.planetObject.remove(this.planetGeo);
     this.planetGeo = OrbitSimulationComponent.generatePlanetGeo(newPlanetData);
@@ -203,7 +191,7 @@ export class OrbitSimulationComponent implements OnInit {
     this.scene.add(this.orbitRing);
 
     // Update planet data for animation
-    this.planetData = newPlanetData;
+    this.planetData.updateFromDao(newPlanetData);
   }
 
   private createLighting(): void {

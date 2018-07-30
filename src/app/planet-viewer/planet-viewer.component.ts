@@ -12,21 +12,19 @@ export class PlanetViewerComponent implements OnInit, AfterViewChecked {
 
   @ViewChild('simcontainer') simContainerElementRef: ElementRef;
 
-  private _simControlService: SimulationControlService;
-
   constructor(private simControlService: SimulationControlService) {
-    this._simControlService = simControlService;
+    this.simControlService.loadNewPlanetData();
   }
 
   ngOnInit() {
   }
 
   onResize(event) {
-    this._simControlService.updateSimulationCanvasSize(this.getSimContainerWidth(), 500);
+    this.simControlService.updateSimulationCanvasSize(this.getSimContainerWidth(), 500);
   }
 
   ngAfterViewChecked() {
-    this._simControlService.updateSimulationCanvasSize(this.getSimContainerWidth(), 500);
+    this.simControlService.updateSimulationCanvasSize(this.getSimContainerWidth(), 500);
   }
 
   getSimContainerWidth(): number {

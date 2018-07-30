@@ -9,6 +9,7 @@ import { MatToolbarModule,
   MatIconModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule} from '@angular/flex-layout';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -39,7 +40,8 @@ import {SimulationControlService} from './shared/services/simulation-control.ser
     MatListModule,
     MatIconModule,
     FlexLayoutModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [
     SimulationControlService

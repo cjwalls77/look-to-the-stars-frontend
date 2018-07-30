@@ -1,13 +1,14 @@
-import * as THREE from 'three';
+import { PlanetDao} from './api/planet-dao';
 
-export class Planet {
+export class Planet implements PlanetDao{
 
+  private _id: number;
   private _name: string;
   private _description: string;
   private _image: string;
 
   private _radius: number;
-  private _color: number;
+  private _color: string;
   private _orbitRadius: number;
 
   private _rotation: number;
@@ -15,6 +16,47 @@ export class Planet {
 
   private _orbit: number;
   private _orbitSpeed: number;
+
+  constructor() {
+    this._rotation = 0;
+    this._orbit = 0;
+
+    // FIXME: Load these from control service
+    this._rotationSpeed = 0.005;
+    this._orbitSpeed = 0.005;
+  }
+
+  get id(): number {
+    return this._id;
+  }
+
+  set id(value: number) {
+    this._id = value;
+  }
+
+  get name(): string {
+    return this._name;
+  }
+
+  set name(value: string) {
+    this._name = value;
+  }
+
+  get description(): string {
+    return this._description;
+  }
+
+  set description(value: string) {
+    this._description = value;
+  }
+
+  get image(): string {
+    return this._image;
+  }
+
+  set image(value: string) {
+    this._image = value;
+  }
 
   get radius(): number {
     return this._radius;
@@ -24,11 +66,11 @@ export class Planet {
     this._radius = value;
   }
 
-  get color(): number {
+  get color(): string {
     return this._color;
   }
 
-  set color(value: number) {
+  set color(value: string) {
     this._color = value;
   }
 
@@ -72,7 +114,15 @@ export class Planet {
     this._orbitSpeed = value;
   }
 
-  constructor() {}
+  public updateFromDao(dao: PlanetDao) {
+    this._id = dao.id;
+    this._name = dao.name;
+    this._description = dao.description;
+    this._image = dao.image;
+    this._radius = dao.radius;
+    this._color = dao.color;
+    this.orbitRadius = dao.orbitRadius;
+  }
 
   public updateRotation() {
     this._rotation += this._rotationSpeed;
@@ -81,5 +131,4 @@ export class Planet {
   public updateOrbit() {
     this._orbit += this.orbitSpeed;
   }
-
 }

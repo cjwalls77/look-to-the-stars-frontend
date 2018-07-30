@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public changePlanet() {
-    this._simControlService.changePlanet();
+    this._simControlService.loadNewPlanetData();
   }
 
 }

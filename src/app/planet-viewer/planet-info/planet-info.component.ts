@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {SimulationControlService} from '../../shared/services/simulation-control.service';
+import {PlanetDao} from '../../shared/models/api/planet-dao';
 
 @Component({
   selector: 'app-planet-info',
@@ -18,9 +20,11 @@ export class PlanetInfoComponent implements OnInit {
     return this._planetDescription;
   }
 
-  constructor() {
-    this._planetName = 'Earth';
-    this._planetDescription = 'This is where we come from...';
+  constructor(private simControlService: SimulationControlService) {
+    this.simControlService.planetDataChange.subscribe((data: PlanetDao) => {
+      this._planetName = data.name;
+      this._planetDescription = data.description;
+    });
   }
 
   ngOnInit() {

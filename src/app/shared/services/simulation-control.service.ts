@@ -2,6 +2,8 @@ import {EventEmitter, Injectable} from '@angular/core';
 import { Observable, of } from 'rxjs';
 import {Planet} from '../models/planet';
 import {SimulationCanvasSize} from '../models/simulation-canvas-size';
+import {PlanetDataApiService} from './planet-data-api.service';
+import {RestResponse} from '../models/api/rest-response';
 
 @Injectable({
   providedIn: 'root'
@@ -34,19 +36,14 @@ export class SimulationControlService {
     return this._simulationCanvasSizeChanged;
   }
 
-  constructor() { }
+  constructor(private dataApiService: PlanetDataApiService) { }
 
-  public changePlanet() {
-    const data = new Planet();
-    data.radius = 10;
-    data.color = 0x92b1ff;
-    data.orbitRadius = 100;
-    data.orbitSpeed = .005;
-    data.orbit = 1;
-    data.rotationSpeed = 0.005;
-    data.rotation = 1;
-
-    this._planetDataChange.next(data);
+  public loadNewPlanetData() {
+    this.dataApiService.getRandomPlanet().subscribe(
+      (res: RestResponse) => {
+        this._planetDataChange.next(res.data);
+    },
+      (error) => console.log(error));
   }
 
   public updateSimulationCanvasSize(width: number, height: number): void {
