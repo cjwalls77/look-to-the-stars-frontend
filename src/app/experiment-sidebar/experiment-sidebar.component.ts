@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {SimulationControlService} from '../shared/services/simulation-control.service';
 import {MatSliderChange, MatSlideToggleChange} from '@angular/material';
 
@@ -7,30 +7,64 @@ import {MatSliderChange, MatSlideToggleChange} from '@angular/material';
   templateUrl: './experiment-sidebar.component.html',
   styleUrls: ['./experiment-sidebar.component.scss']
 })
-export class ExperimentSidebarComponent implements OnInit {
+export class ExperimentSidebarComponent implements OnInit, AfterViewInit {
 
-  private _simControlService: SimulationControlService;
+  @Output() close = new EventEmitter();
+
+  // Orbit Speed Slider Config
+  public orbitSpeedMinValue = .001;
+  public orbitSpeedMaxValue = .1;
+  public orbitSpeedStep = .001;
+  public orbitSpeedValue = .005;
+
+  // Rotation Speed Slider Config
+  public rotationSpeedMinValue = .001;
+  public rotationSpeedMaxValue = .1;
+  public rotationSpeedStep = .001;
+  public rotationSpeedValue = .05;
 
   constructor(private simControlService: SimulationControlService) {
-    this._simControlService = simControlService;
+    this.orbitSpeedValue = this.simControlService.currentOrbitSpeed;
+    this.rotationSpeedValue = this.simControlService.currentRotationSpeed;
   }
 
   ngOnInit() {
   }
 
+  ngAfterViewInit() {
+  }
+
+  closeSideBar() {
+    this.close.emit();
+  }
+
+  /**
+   * Change orbit speed of planet in simulation.
+   * @param change New orbit speed value.
+   */
   changeOrbitSpeed(change: MatSliderChange) {
-    this._simControlService.changePlanetOrbitSpeed(change.value);
+    this.orbitSpeedValue = change.value;
+    this.simControlService.changePlanetOrbitSpeed(change.value);
   }
 
+  /**
+   * Change rotation speed of planet in simulation.
+   * @param change New rotation speed value.
+   */
   changeRotationSpeed(change: MatSliderChange) {
-    this._simControlService.changePlanetRotationSpeed(change.value);
+    this.rotationSpeedValue = change.value;
+    this.simControlService.changePlanetRotationSpeed(change.value);
   }
 
+  /**
+   * Turn planet orbiting on/off.
+   * @param change New toggle value for orbiting  on/off.
+   */
   changeIsOrbiting(change: MatSlideToggleChange) {
     if (change.checked === true) {
-      this._simControlService.startOrbiting();
+      this.simControlService.startOrbiting();
     } else {
-      this._simControlService.stopOrbiting();
+      this.simControlService.stopOrbiting();
     }
   }
 

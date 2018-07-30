@@ -1,5 +1,10 @@
 @import "../../../global-styles/partials/global-strut";
 
+@media screen and (max-width: 959px) {
+  .planet-info-container {
+    margin-top: 0;
+  }
+}
 .planet-info-container {
   @extend %header-top-spacing;
   margin-right: 1em;

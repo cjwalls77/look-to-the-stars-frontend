@@ -9,7 +9,4 @@ describe('PlanetDataApiService', () => {
     });
   });
 
-  it('should be created', inject([PlanetDataApiService], (service: PlanetDataApiService) => {
-    expect(service).toBeTruthy();
-  }));
 });

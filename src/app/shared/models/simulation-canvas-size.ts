@@ -1,4 +1,6 @@
-
+/**
+ * Simulation Canvas Size Model
+ */
 export class SimulationCanvasSize {
   private _width: number;
   private _height: number;

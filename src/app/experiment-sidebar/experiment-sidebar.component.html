@@ -1,19 +1,23 @@
 <form id="simulation-control-form">
   <mat-list>
     <mat-list-item>
-      <h1>Experiment</h1>
+      <span class="spacer"></span>
+      <button type="button" mat-icon-button (click)="closeSideBar()"><mat-icon>close</mat-icon></button>
+    </mat-list-item>
+    <mat-list-item>
+      <h1>Planet Parameters</h1>
     </mat-list-item>
     <mat-list-item>
       <mat-slide-toggle [checked]="true" (change)="changeIsOrbiting($event)">Orbiting</mat-slide-toggle>
     </mat-list-item>
     <mat-list-item>
       <label for="orbit-slider">Orbit Speed</label>
-      <mat-slider id="orbit-slider" [min]=".001" [step]=".001" [max]=".1" [value]=".05"
+      <mat-slider id="orbit-slider" [min]="orbitSpeedMinValue" [step]="orbitSpeedStep" [max]="orbitSpeedMaxValue" [value]="orbitSpeedValue"
                   (change)="changeOrbitSpeed($event)"></mat-slider>
     </mat-list-item>
     <mat-list-item>
       <label for="rotation-slider">Rotation Speed</label>
-      <mat-slider id="rotation-slider" [min]=".001" [step]=".001" [max]=".1" [value]=".05"
+      <mat-slider id="rotation-slider" [min]="rotationSpeedMinValue" [step]="rotationSpeedStep" [max]="rotationSpeedMaxValue" [value]="rotationSpeedValue"
                   (change)="changeRotationSpeed($event)"></mat-slider>
     </mat-list-item>
   </mat-list>

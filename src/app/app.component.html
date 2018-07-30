@@ -7,7 +7,7 @@
       <mat-sidenav mode="over" [opened]="showSidebar" (openedChange)="updateSidebarOpenState($event)"
                   class="drawer-sidebar">
         <aside>
-          <app-experiment-sidebar></app-experiment-sidebar>
+          <app-experiment-sidebar (close)="closeSidebar($event)"></app-experiment-sidebar>
         </aside>
       </mat-sidenav>
       <mat-sidenav-content class="main-content">

@@ -1,3 +1,6 @@
+/**
+ * Planet Data Access Object
+ */
 export interface PlanetDao {
   id: number;
   name: string;

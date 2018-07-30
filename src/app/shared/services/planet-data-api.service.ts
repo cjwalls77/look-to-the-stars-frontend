@@ -12,6 +12,9 @@ export class PlanetDataApiService {
 
   constructor(private httpClient: HttpClient) { }
 
+  /**
+   * Get data fro a random planet from the planets API endpoint.
+   */
   public getRandomPlanet(): Observable<RestResponse> {
     return this.httpClient.get<RestResponse>(`${this.API_URL}/planets?queryType=random`);
   }

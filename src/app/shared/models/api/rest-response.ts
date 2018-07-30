@@ -1,3 +1,6 @@
+/**
+ * Rest Response Model
+ */
 export class RestResponse {
   public data: any;
   public meta: any;

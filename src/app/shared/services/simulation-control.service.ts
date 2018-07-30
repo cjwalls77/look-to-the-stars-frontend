@@ -1,5 +1,4 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import { Observable, of } from 'rxjs';
 import {Planet} from '../models/planet';
 import {SimulationCanvasSize} from '../models/simulation-canvas-size';
 import {PlanetDataApiService} from './planet-data-api.service';
@@ -10,11 +9,24 @@ import {RestResponse} from '../models/api/rest-response';
 })
 export class SimulationControlService {
 
+  private _currentOrbitSpeed = 0.05;
+  private _currentRotationSpeed = 0.05;
+
+  // Event Emitters
   private _planetOrbitSpeedChange = new EventEmitter<number>();
   private _planetRotationSpeedChange = new EventEmitter<number>();
   private _planetDataChange = new EventEmitter<Planet>();
   private _isOrbiting = new EventEmitter<boolean>();
   private _simulationCanvasSizeChanged = new EventEmitter<SimulationCanvasSize>();
+
+
+  get currentOrbitSpeed(): number {
+    return this._currentOrbitSpeed;
+  }
+
+  get currentRotationSpeed(): number {
+    return this._currentRotationSpeed;
+  }
 
   get planetOrbitSpeedChange(): EventEmitter<number> {
     return this._planetOrbitSpeedChange;
@@ -38,6 +50,9 @@ export class SimulationControlService {
 
   constructor(private dataApiService: PlanetDataApiService) { }
 
+  /**
+   * Load new planet data from REST API.
+   */
   public loadNewPlanetData() {
     this.dataApiService.getRandomPlanet().subscribe(
       (res: RestResponse) => {
@@ -46,26 +61,45 @@ export class SimulationControlService {
       (error) => console.log(error));
   }
 
+  /**
+   * Update simulation canvas based on new container size.
+   * @param width New width of container.
+   * @param height New height of container.
+   */
   public updateSimulationCanvasSize(width: number, height: number): void {
     const canvasSize = new SimulationCanvasSize(width, height);
     this.simulationCanvasSizeChanged.emit(canvasSize);
   }
 
+  /**
+   * Emit event to starting planet orbiting for simulation.
+   */
   public startOrbiting() {
     this._isOrbiting.emit(true);
   }
 
+  /**
+   * Emit event to stop planet orbiting for simulation.
+   */
   public stopOrbiting() {
     this._isOrbiting.emit(false);
   }
 
-  public changePlanetOrbitSpeed(days: number) {
-    // TODO: Determine formula to translate days to animation speed for orbit
-    this._planetOrbitSpeedChange.emit(days);
+  /**
+   * Emit event to change planet orbit speed;
+   * @param speed Orbit speed.
+   */
+  public changePlanetOrbitSpeed(speed: number) {
+    this._currentOrbitSpeed = speed;
+    this._planetOrbitSpeedChange.emit(speed);
   }
 
-  public changePlanetRotationSpeed(hours: number) {
-    // TODO: Determine formula to translate hours to animation speed for rotation
-    this._planetRotationSpeedChange.emit(hours);
+  /**
+   * Emit event to change planet axis rotation speed.
+   * @param speed Rotation speed
+   */
+  public changePlanetRotationSpeed(speed: number) {
+    this._currentRotationSpeed = speed;
+    this._planetRotationSpeedChange.emit(speed);
   }
 }

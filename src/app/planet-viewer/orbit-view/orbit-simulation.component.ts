@@ -4,6 +4,7 @@ import { Planet } from '../../shared/models/planet';
 import {SimulationControlService} from '../../shared/services/simulation-control.service';
 import {SimulationCanvasSize} from '../../shared/models/simulation-canvas-size';
 import {PlanetDao} from '../../shared/models/api/planet-dao';
+import {sp} from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-orbit-view',
@@ -99,6 +100,8 @@ export class OrbitSimulationComponent implements OnInit {
 
   constructor(private simControlService: SimulationControlService) {
     this.subscribeToSimulationControlChanges();
+    this.planetData.orbitSpeed = this.simControlService.currentOrbitSpeed;
+    this.planetData.rotationSpeed = this.simControlService.currentRotationSpeed;
   }
 
   /**

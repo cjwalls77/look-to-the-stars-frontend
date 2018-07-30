@@ -19,7 +19,4 @@ describe('ExperimentSidebarComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 });

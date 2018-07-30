@@ -9,7 +9,4 @@ describe('SimulationControlService', () => {
     });
   });
 
-  it('should be created', inject([SimulationControlService], (service: SimulationControlService) => {
-    expect(service).toBeTruthy();
-  }));
 });

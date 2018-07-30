@@ -8,6 +8,9 @@ import {SimulationControlService} from '../shared/services/simulation-control.se
 })
 export class PlanetViewerComponent implements OnInit, AfterViewChecked {
 
+  private readonly DEFAULT_ORBIT_SPEED = 0.02;
+  private readonly DEFAULT_ROTATION_SPEED = 0.02;
+
   @Output() settingsToggleChange = new EventEmitter();
 
   @ViewChild('simcontainer') simContainerElementRef: ElementRef;

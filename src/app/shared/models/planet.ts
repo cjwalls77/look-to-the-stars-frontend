@@ -1,11 +1,14 @@
 import { PlanetDao} from './api/planet-dao';
 
+/**
+ * Planet Simulation Data Model
+ */
 export class Planet implements PlanetDao{
 
   private _id: number;
   private _name: string;
   private _description: string;
-  private _image: string;
+  private _image: string; // TODO: Future enhancement to store and load images for each planet
 
   private _radius: number;
   private _color: string;
@@ -20,10 +23,8 @@ export class Planet implements PlanetDao{
   constructor() {
     this._rotation = 0;
     this._orbit = 0;
-
-    // FIXME: Load these from control service
-    this._rotationSpeed = 0.005;
-    this._orbitSpeed = 0.005;
+    this._rotationSpeed = 0;
+    this._orbitSpeed = 0;
   }
 
   get id(): number {
