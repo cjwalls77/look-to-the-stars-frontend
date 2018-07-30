@@ -8,16 +8,16 @@
       <h1>Planet Parameters</h1>
     </mat-list-item>
     <mat-list-item>
-      <mat-slide-toggle [checked]="true" (change)="changeIsOrbiting($event)">Orbiting</mat-slide-toggle>
+      <mat-slide-toggle color="primary" [checked]="true" (change)="changeIsOrbiting($event)">Orbiting</mat-slide-toggle>
     </mat-list-item>
     <mat-list-item>
       <label for="orbit-slider">Orbit Speed</label>
-      <mat-slider id="orbit-slider" [min]="orbitSpeedMinValue" [step]="orbitSpeedStep" [max]="orbitSpeedMaxValue" [value]="orbitSpeedValue"
+      <mat-slider color="primary" id="orbit-slider" [min]="orbitSpeedMinValue" [step]="orbitSpeedStep" [max]="orbitSpeedMaxValue" [value]="orbitSpeedValue"
                   (change)="changeOrbitSpeed($event)"></mat-slider>
     </mat-list-item>
     <mat-list-item>
       <label for="rotation-slider">Rotation Speed</label>
-      <mat-slider id="rotation-slider" [min]="rotationSpeedMinValue" [step]="rotationSpeedStep" [max]="rotationSpeedMaxValue" [value]="rotationSpeedValue"
+      <mat-slider color="primary" id="rotation-slider" [min]="rotationSpeedMinValue" [step]="rotationSpeedStep" [max]="rotationSpeedMaxValue" [value]="rotationSpeedValue"
                   (change)="changeRotationSpeed($event)"></mat-slider>
     </mat-list-item>
   </mat-list>

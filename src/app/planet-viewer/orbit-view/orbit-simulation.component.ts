@@ -288,9 +288,12 @@ export class OrbitSimulationComponent implements OnInit {
    * Animation steps for rendering each frame in render loop.
    */
   private animate() {
+    // Update Planet Rotation
+    this.planetData.updateRotation();
+    this.planetObject.rotation.set(0, this.planetData.rotation, 0);
+
+    // Update Planet Orbit Position
     if (this.isOrbiting) { // Don't update planet if orbiting paused
-      this.planetData.updateRotation();
-      this.planetObject.rotation.set(0, this.planetData.rotation, 0);
       this.planetData.updateOrbit();
       this.planetObject.position.set(
         Math.cos(this.planetData.orbit) * this.planetData.orbitRadius,

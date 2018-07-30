@@ -18,9 +18,9 @@ export class ExperimentSidebarComponent implements OnInit, AfterViewInit {
   public orbitSpeedValue = .005;
 
   // Rotation Speed Slider Config
-  public rotationSpeedMinValue = .001;
+  public rotationSpeedMinValue = .01;
   public rotationSpeedMaxValue = .1;
-  public rotationSpeedStep = .001;
+  public rotationSpeedStep = .01;
   public rotationSpeedValue = .05;
 
   constructor(private simControlService: SimulationControlService) {
