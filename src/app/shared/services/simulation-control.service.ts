@@ -11,6 +11,7 @@ export class SimulationControlService {
 
   private _currentOrbitSpeed = 0.05;
   private _currentRotationSpeed = 0.05;
+  private _currentPlanetId = null;
 
   // Event Emitters
   private _planetOrbitSpeedChange = new EventEmitter<number>();
@@ -56,7 +57,12 @@ export class SimulationControlService {
   public loadNewPlanetData() {
     this.dataApiService.getRandomPlanet().subscribe(
       (res: RestResponse) => {
-        this._planetDataChange.next(res.data);
+        // Request a new random planet, if the planet is the same as the current planet request a new one from api
+        if (this._currentPlanetId == null && this._currentPlanetId !== res.data.id) {
+          this._planetDataChange.next(res.data);
+        } else {
+          this.loadNewPlanetData();
+        }
     },
       (error) => console.log(error));
   }
