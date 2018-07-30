@@ -64,7 +64,7 @@ export class OrbitSimulationComponent implements OnInit {
 
   // Flag to start/stop orbit animation
   private isOrbiting = true;
-  private needsOrbitPosRender = false;
+  private needsOrbitPositionRender = false;
 
   /**
    * Generate three.js planet geometry from planet data.
@@ -122,7 +122,7 @@ export class OrbitSimulationComponent implements OnInit {
     // Planet Change Event
     this.simControlService.planetDataChange.subscribe((data: Planet) => {
       this.updatePlanet(data);
-      this.needsOrbitPosRender = true;
+      this.needsOrbitPositionRender = true;
     });
 
     // Orbit Speed Change Event
@@ -302,13 +302,14 @@ export class OrbitSimulationComponent implements OnInit {
         0,
         Math.sin(this.planetData.orbit) * this.planetData.orbitRadius
       );
-    } else if (this.needsOrbitPosRender) {
+    } else if (this.needsOrbitPositionRender) {
       // Render same orbit location but with new planet orbit radius
       this.planetObject.position.set(
         Math.cos(this.planetData.orbit) * this.planetData.orbitRadius,
         0,
         Math.sin(this.planetData.orbit) * this.planetData.orbitRadius
       );
+      this.needsOrbitPositionRender = false; // Clear once position is updated for new planet
     }
   }
 
