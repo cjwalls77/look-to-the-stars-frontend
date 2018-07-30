@@ -3,17 +3,25 @@
     <app-header></app-header>
   </header>
   <article>
-    <mat-drawer-container>
-      <mat-drawer mode="over" [opened]="showSidebar" (openedChange)="updateSidebarOpenState($event)" class="drawer-sidebar">
+    <mat-sidenav-container fullscreen>
+      <mat-sidenav mode="over" [opened]="showSidebar" (openedChange)="updateSidebarOpenState($event)"
+                  class="drawer-sidebar">
         <aside>
           <app-experiment-sidebar></app-experiment-sidebar>
         </aside>
-      </mat-drawer>
-      <mat-drawer-content class="drawer-content">
+      </mat-sidenav>
+      <mat-sidenav-content class="main-content">
         <app-planet-viewer (settingsToggleChange)="toggleSidebar($event)"></app-planet-viewer>
-      </mat-drawer-content>
-    </mat-drawer-container>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
   </article>
+  <footer class="mat-elevation-z15">
+    <mat-toolbar color="primary">
+      <span class="spacer"></span>
+      <span class="mat-caption">&copy; Space Explorer Production</span>
+      <span class="spacer"></span>
+    </mat-toolbar>
+  </footer>
 </section>
 
 

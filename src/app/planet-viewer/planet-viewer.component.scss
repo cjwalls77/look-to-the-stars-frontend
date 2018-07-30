@@ -1,7 +1,10 @@
 @import "../../global-styles/partials/global-strut";
 
-button {
+#experiment-button-container {
   @extend %header-top-spacing;
+}
+
+button {
   color: blueviolet;
   background-color: white;
 }

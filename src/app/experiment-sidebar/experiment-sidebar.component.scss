@@ -1,0 +1,5 @@
+@import "../../global-styles/partials/global-strut";
+
+#simulation-control-form {
+  @extend %header-top-spacing;
+}

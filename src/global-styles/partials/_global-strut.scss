@@ -1,15 +1,10 @@
 @import "global-color-palette";
 
-body {
-  background-color: $space-bg;
-}
-
-h1 {
-  font-weight: bold;
-}
-
-.fill-space {
-  flex: 1 1 auto;
+%fixed-above-content {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  z-index: 2;
 }
 
 %button-style-mods {
@@ -17,5 +12,34 @@ h1 {
 }
 
 %header-top-spacing {
-  margin-top: 20px;
+  margin-top: 5em;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: $space-bg;
+  height: 100%;
+}
+
+header {
+  @extend %fixed-above-content;
+  top: 0;
+}
+
+footer {
+  @extend %fixed-above-content;
+  bottom: 0;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+.spacer {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
 }
